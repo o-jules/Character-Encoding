@@ -21,4 +21,6 @@ int main()
   // sizeof 的结果是 8
   printf("Size of `hello`: %lu\n", sizeof(hello));
   // 如何知道 hello 的内容占了多少个byte？
+
+  return 0;
 }

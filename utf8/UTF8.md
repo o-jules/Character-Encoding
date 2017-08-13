@@ -11,7 +11,7 @@
 
 ## Unicode编码为UTF8的方法
 
-  已知一个字符的Unicode Codepoint是 n，求其UTF8储存的字节
+  已知一个字符的Unicode Codepoint是 n，求其UTF8储存的字节。
   二进制转换基本表格：
 
    - 10xxxxxx = 2^7 + ... = 128 + n (n >= 0 && n <= 63)
@@ -23,6 +23,10 @@
    - 11110xxx = 2^7 + 2^6 + 2^5 + 2^4 + ... = 240 + n (n >= 0 && n <= 7)
 
   具体的算法参照源代码：[convert.ts](./code/convert.ts)
+
+## UTF8解碼
+  已知一序列的UTF8二进制码，将其解码为Unicode codepoint。
+  具体算法参照源代码：[decode.cpp](./code/decode.cpp)
 
 ## 附录/Appendix
 
