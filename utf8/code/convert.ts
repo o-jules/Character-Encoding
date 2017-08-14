@@ -68,7 +68,7 @@ function toHex(n: number): string {
   return n.toString(16)
 }
 
-function convertSerialAsBinaryHex(s: string): string {
+function stringToUTF8Hex(s: string): string {
   const len = s.length
   const list: string[] = new Array()
   for (let i = 0; i < len; i++) {
@@ -82,4 +82,4 @@ function convertSerialAsBinaryHex(s: string): string {
 }
 
 // test:
-console.log(convertSerialAsBinaryHex('Hello, 世界！'))
+console.log(stringToUTF8Hex('Hello, 世界！'))
