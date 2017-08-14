@@ -13,7 +13,16 @@
 #define B11110X 240
 #define BYTE_SIZE sizeof(Byte)
 
+Byte BOM[3] = {239, 187, 191};
 unsigned int BASES[] = {B10X, B110X, B1110X, B11110X};
+
+/**
+ * 按位数向右(相当于乘以 2 ^ n)
+ */
+Codepoint lpad(unsigned int base, unsigned int power)
+{
+  return base * (1 << (power * 6));
+}
 
 /**
  * 检测该字节属于哪一种
@@ -42,7 +51,7 @@ int detect(Byte b)
 };
 
 /**
- * 对字节流进行解码
+ * 对字节流进行解码，这里不对BOM进行处理。
  */
 CodepointStream *decode(ByteStream &bs)
 {
@@ -64,7 +73,7 @@ CodepointStream *decode(ByteStream &bs)
       else
       {
         acc++;
-        cp += (b - B10X) * (1 << ((state - acc) * 6));
+        cp += lpad(b - B10X, state - acc);
       }
     }
     else
@@ -79,7 +88,7 @@ CodepointStream *decode(ByteStream &bs)
       {
         if (state != 0)
           str->push_back(cp);
-        cp = (size == 1) ? (Codepoint)b : (b - BASES[size - 1]) * (1 << ((size - 1) * 6));
+        cp = size == 1 ? (Codepoint)b : lpad(b - BASES[size - 1], size - 1);
         state = size;
         acc = 1;
       }
