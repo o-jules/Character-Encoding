@@ -30,22 +30,13 @@ Codepoint lpad(unsigned int base, unsigned int power)
 int detect(Byte b)
 {
   if (b < B10X)
-  {
     return 1;
-  }
-
   if (b >= B11110X)
-  {
     return 4;
-  }
-  else if (b >= B1110X)
-  {
+  if (b >= B1110X)
     return 3;
-  }
-  else if (b >= B110X)
-  {
+  if (b >= B110X)
     return 2;
-  }
 
   return 0;
 };
@@ -65,6 +56,7 @@ CodepointStream *decode(ByteStream &bs)
 
     if (size == 0)
     {
+      // 编码中存在错误
       if (acc + 1 > state)
       {
         printf("Encoding contains errors.");
@@ -122,7 +114,7 @@ int main()
   auto cs = decode(bs);
   for (auto &p : *cs)
   {
-    printf("%lu\n", p);
+    printf("dec: %09lu\thex: %06x\n", p, p);
   }
 
   return 0;
