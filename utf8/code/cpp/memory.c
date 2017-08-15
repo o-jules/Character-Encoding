@@ -1,16 +1,15 @@
 #include <stdio.h>
+#include "types.h"
 
 // C/C++程序的字符串常量
 // 在*nix平台，默认是以UTF8储存的
 
-#define BYTE unsigned char
-
 int main()
 {
-  char *hello = "Hello, 世界！";
+  const char *hello = "Hello, 世界！";
 
-  BYTE *b;
-  b = (BYTE *)hello;
+  Byte *b;
+  b = (Byte *)hello;
 
   while (*b != '\0')
   {

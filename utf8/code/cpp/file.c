@@ -1,10 +1,9 @@
 #include <stdio.h>
-
-#define BYTE unsigned char
+#include "types.h"
 
 int main()
 {
-  BYTE b;
+  Byte b;
 
   FILE *pfile;
   pfile = fopen("utf8.txt", "rb");
@@ -15,8 +14,7 @@ int main()
     return 1;
   }
 
-  size_t ByteSize = sizeof(BYTE);
-  while (fread(&b, ByteSize, 1, pfile))
+  while (fread(&b, BYTE_SIZE, 1, pfile))
   {
     printf("%d ", b);
   }

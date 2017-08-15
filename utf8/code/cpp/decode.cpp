@@ -1,17 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
-
-#define Byte unsigned char
-#define ByteStream std::vector<Byte>
-#define Codepoint unsigned long int
-#define CodepointStream std::vector<Codepoint>
-
-#define B10X 128
-#define B110X 192
-#define B1110X 224
-#define B11110X 240
-#define BYTE_SIZE sizeof(Byte)
+#include "types.h"
 
 Byte BOM[3] = {239, 187, 191};
 unsigned int BASES[] = {B10X, B110X, B1110X, B11110X};
@@ -114,7 +104,7 @@ int main()
   auto cs = decode(bs);
   for (auto &p : *cs)
   {
-    printf("dec: %09lu\thex: %06x\n", p, p);
+    printf("dec: %09llu\thex: %06llx\n", p, p);
   }
 
   return 0;
