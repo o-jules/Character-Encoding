@@ -1,3 +1,6 @@
+#ifndef _DECODE_H
+#define _DECODE_H
+
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
@@ -85,3 +88,4 @@ CodepointStream *decode(ByteStream &bs)
   return str;
 }
 
+#endif
