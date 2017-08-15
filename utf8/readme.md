@@ -1,8 +1,10 @@
 # UTF8
 
+UTF8 是一种兼容 ASCII 编码的变长编码。
+
 ## UTF8编码的细节：
 
-| bytes count | bits | range               | byte                                  |
+| Bytes count | Bits | Range               | Bytes                                 |
 |-------------|------|---------------------|---------------------------------------|
 |      1      |  7   | U+0000 - U+007F     | 0xxxxxxx                              |
 |      2      |  11  | U+0080 - U+07FF     | 110xxxxx 10xxxxxx                     |
@@ -37,16 +39,17 @@
 | 1110xxxx  | 2^7 + 2^6 + 2^5 + ... = 224 + n (n >= 0 && n <= 15)       |
 | 11110xxx  | 2^7 + 2^6 + 2^5 + 2^4 + ... = 240 + n (n >= 0 && n <= 7)  |
 
-  具体的算法参照源代码：[convert.ts](./code/convert.ts)
+  具体的算法参照源代码：[encode.ts](./code/typescript/encode.ts) 或 [encode.cpp](./code/cpp/encode.cpp)。
 
 ## 解碼
 
   已知一序列的UTF8二进制码，将其解码为Unicode codepoint。
 
   ```rust
-  fn decode(stream: Vec<u8>) -> Vec<u64>
+  fn decode(stream: Vec<u8>) -> Vec<u64>
   ```
-  具体算法参照源代码：[decode.cpp](./code/decode.cpp)
+
+  具体算法参照源代码：[decode.cpp](./code/cpp/decode.cpp)
 
 ## 附录/Appendix
 
