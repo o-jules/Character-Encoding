@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "types.h"
 
-int main()
+int main(int argc, char **argv)
 {
   Byte b;
 
