@@ -1,3 +1,4 @@
+#include <cstdio>
 #include "types.h"
 #include "decode.h"
 #include "encode.h"
