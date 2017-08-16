@@ -1,26 +1,12 @@
 #include <cstdio>
 #include "types.h"
-
-Byte BOM[3] = {239, 187, 191};
-
-bool isBom(FILE *pfile)
-{
-  Byte b;
-  int i = 0;
-  while (fread(&b, BYTE_SIZE, 1, pfile))
-  {
-    if (b != BOM[i] || i >= 3)
-      break;
-    i++;
-  }
-
-  return i == 3;
-}
+#include "bom.h"
 
 int main(int argc, char **argv)
 {
   if (argc < 2)
   {
+    printf("File name missing.");
     return 1;
   }
 
@@ -31,10 +17,17 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  if (isBom(pfile))
+  if (isBOM(pfile))
     printf("UTF8 with BOM\n");
   else
     printf("UTF8 without BOM\n");
+
+  printf("Bytes:\n");
+  Byte b;
+  while (fread(&b, BYTE_SIZE, 1, pfile))
+  {
+    printf("%d ", b);
+  }
 
   return 0;
 }
