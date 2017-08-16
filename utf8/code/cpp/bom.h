@@ -1,11 +1,12 @@
 #ifndef _BOM_H
 #define _BOM_H
 
+#include <cstdio>
 #include "types.h"
 
 Byte BOM[3] = {239, 187, 191};
 
-bool isBOM(FILE *f)
+bool is_bom(FILE *f)
 {
   Byte b;
   int i = 0;

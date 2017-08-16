@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  if (isBOM(pfile))
+  if (is_bom(pfile))
     printf("UTF8 with BOM\n");
   else
     printf("UTF8 without BOM\n");
