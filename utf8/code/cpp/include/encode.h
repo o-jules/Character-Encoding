@@ -52,6 +52,17 @@ bytes *encode(u64 point)
   return list;
 };
 
+bytes *encode_stream(codepoints &s) {
+  auto list = new bytes();
+  for (auto &i : s) {
+    auto c = encode(i);
+    list->insert(list->end(), c->begin(), c->end());
+
+    delete c;
+  }
+  return list;
+};
+
 } // end of namespace
 
 #endif

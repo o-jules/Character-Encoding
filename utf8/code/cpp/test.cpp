@@ -2,43 +2,28 @@
 #include "include/types.h"
 #include "include/decode.h"
 #include "include/encode.h"
+#include "include/io.h"
 
 int main(int argc, char **argv)
 {
-  FILE *pfile = fopen("utf8.txt", "rb");
-  if (!pfile)
-  {
-    printf("File open failed.");
-    return 1;
-  }
-
-  utf8::bytes bs;
-  utf8::u8 b;
-  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
-  {
-    bs.push_back(b);
-    printf("%d ", b);
-  }
-  printf("\n");
-
-  auto cs = utf8::decode(bs);
+  auto cs = utf8::decode_file("utf8.txt");
   printf("Decoding:\n");
   for (auto &p : *cs)
   {
-    printf("dec: %09llu\thex: %06llx\n", p, p);
+    printf("dec: %08llu\thex: %06llx\n", p, p);
   }
   // release dynamic memory
   delete cs;
 
-  /*
-  utf8::u64 cp = 19990L; //'世';
-  utf8::bytes *dc;
-  dc = utf8::encode(cp);
-  printf("Encoding:\n");
+  utf8::codepoints cp = { 19990L, 30028L }; //'世', '界';
+  auto dc = utf8::encode_stream(cp);
+  printf("\nEncoding:\n");
+
+  FILE *fw = fopen("write.tmp", "wb");
   for (auto &p : *dc) {
     printf("%u\n", p);
+    fwrite(&p, utf8::BYTE_SIZE, 1, fw);
   }
-  */
 
   return 0;
 }
