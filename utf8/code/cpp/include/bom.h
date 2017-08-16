@@ -1,14 +1,17 @@
-#ifndef _BOM_H
-#define _BOM_H
+#ifndef _UTF8_BOM_H
+#define _UTF8_BOM_H
 
 #include <cstdio>
 #include "types.h"
 
-Byte BOM[3] = {239, 187, 191};
+namespace utf8
+{
+
+static const u8 BOM[3] = {239, 187, 191};
 
 bool is_bom(FILE *f)
 {
-  Byte b;
+  u8 b;
   int i = 0;
   while (i <= 2)
   {
@@ -21,6 +24,8 @@ bool is_bom(FILE *f)
   if (!s)
     fseek(f, 0, SEEK_SET);
   return s;
-}
+};
+
+} // end of namespace
 
 #endif

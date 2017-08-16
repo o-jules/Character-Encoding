@@ -1,6 +1,6 @@
 #include <cstdio>
-#include "types.h"
-#include "bom.h"
+#include "include/types.h"
+#include "include/bom.h"
 
 int main(int argc, char **argv)
 {
@@ -17,14 +17,14 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  if (is_bom(pfile))
+  if (utf8::is_bom(pfile))
     printf("UTF8 with BOM\n");
   else
     printf("UTF8 without BOM\n");
 
   printf("Bytes:\n");
-  Byte b;
-  while (fread(&b, BYTE_SIZE, 1, pfile))
+  utf8::u8 b;
+  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
   {
     printf("%d ", b);
   }

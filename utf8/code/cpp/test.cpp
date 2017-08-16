@@ -1,7 +1,7 @@
 #include <cstdio>
-#include "types.h"
-#include "decode.h"
-#include "encode.h"
+#include "include/types.h"
+#include "include/decode.h"
+#include "include/encode.h"
 
 int main(int argc, char **argv)
 {
@@ -12,14 +12,16 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  ByteStream bs;
-  Byte b;
-  while (fread(&b, BYTE_SIZE, 1, pfile))
+  utf8::bytes bs;
+  utf8::u8 b;
+  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
   {
     bs.push_back(b);
+    printf("%d ", b);
   }
+  printf("\n");
 
-  auto cs = decode(bs);
+  auto cs = utf8::decode(bs);
   printf("Decoding:\n");
   for (auto &p : *cs)
   {
@@ -28,13 +30,15 @@ int main(int argc, char **argv)
   // release dynamic memory
   delete cs;
 
-  Codepoint cp = 19990L; //'世';
-  ByteStream *dc;
-  dc = encode(cp);
+  /*
+  utf8::u64 cp = 19990L; //'世';
+  utf8::bytes *dc;
+  dc = utf8::encode(cp);
   printf("Encoding:\n");
   for (auto &p : *dc) {
     printf("%u\n", p);
   }
+  */
 
   return 0;
 }

@@ -1,15 +1,30 @@
+#ifndef _UTF8_DECODE_H
+#define _UTF8_DECODE_H
+
 #include <cstdio>
 #include "vars.h"
 #include "types.h"
 #include "decode.h"
 
+namespace utf8
+{
+
 /// 按位数向右(相当于乘以 2 ^ n)
-#define LPAD(b, p) (b) * (1 << ((p)*6))
+inline u64 lpad(u8 b, int d)
+{
+  return ((u64)b) << (d * 6);
+}
 
 /// 移除字节二进制左侧的 n 个1
-#define LDROP(b, n) b ^= (~0 >> (8 - n) << (8 - n))
+inline int ldrop(size_t i)
+{
+  return ~0u >> (8 - i) << (8 - i);
+}
 
-int detect_byte(Byte b)
+/**
+ * 检测该字节属于哪一种
+ */
+int detect_byte(u8 b)
 {
   if (b < B10X)
     return 1;
@@ -23,13 +38,16 @@ int detect_byte(Byte b)
   return 0;
 };
 
-CodepointStream *decode(ByteStream &bs)
+/**
+ * 对字节流进行解码，这里不对BOM进行检测和处理。
+ */
+codepoints *decode(bytes &bs)
 {
-  CodepointStream *str = new CodepointStream();
-
-  Codepoint cp = 0; // code point
+  auto str = new codepoints();
+  u64 cp = 0; // code point
   int state = 0, acc = 0;
   int size = 0;
+
   for (auto &b : bs)
   {
     size = detect_byte(b);
@@ -45,7 +63,7 @@ CodepointStream *decode(ByteStream &bs)
       else
       {
         acc++;
-        cp += LPAD(LDROP(b, 1), state - acc);
+        cp += lpad(b ^ ldrop(1), state - acc);
       }
     }
     else
@@ -60,7 +78,15 @@ CodepointStream *decode(ByteStream &bs)
       {
         if (state != 0)
           str->push_back(cp);
-        cp = (Codepoint) (size == 1 ? b : LPAD(LDROP(b, size), size - 1));
+
+        if (size == 1)
+        {
+          cp = (u64)b;
+        }
+        else
+        {
+          cp = lpad(b ^ ldrop(size), size - 1);
+        }
         state = size;
         acc = 1;
       }
@@ -74,3 +100,6 @@ CodepointStream *decode(ByteStream &bs)
 
   return str;
 };
+};
+
+#endif

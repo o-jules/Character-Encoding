@@ -1,9 +1,14 @@
+#ifndef _UTF8_ENCODE_H
+#define _UTF8_ENCODE_H
 #include "types.h"
 #include "vars.h"
 #include "encode.h"
 
+namespace utf8
+{
+
 /// 检测Unicode字符的区间
-int detect_char(Codepoint cp)
+int detect_char(u64 cp)
 {
   if (cp <= U1_L)
     return 1;
@@ -18,31 +23,35 @@ int detect_char(Codepoint cp)
 }
 
 /// 编码，将Unicode codepoint转换成字节流
-ByteStream *encode(Codepoint point)
+bytes *encode(u64 point)
 {
   int count = detect_char(point);
   if (count == 0)
     return nullptr;
 
-  ByteStream *list = new ByteStream();
+  auto list = new bytes();
 
   if (count == 1)
   {
-    list->push_back((Byte)point);
+    list->push_back((u8)point);
   }
   else
   {
     int i = count, s = count - 1, j = 0;
-    Byte b;
+    u8 b;
     while (i-- > 0)
     {
       j = i * 6;
       b = point >> j;
       point &= ~(b << j);
       j = i == s ? 7 - i : 7;
-      list->push_back(b |= ~0 >> j << j);
+      list->push_back(b |= ~0ul >> j << j);
     }
   }
 
   return list;
-}
+};
+
+} // end of namespace
+
+#endif

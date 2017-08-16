@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include "types.h"
+#include <cstdio>
+#include "include/types.h"
 
 int main(int argc, char **argv)
 {
-  Byte b;
+  utf8::u8 b;
 
   FILE *pfile;
   pfile = fopen("utf8.txt", "rb");
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  while (fread(&b, BYTE_SIZE, 1, pfile))
+  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
   {
     printf("%d ", b);
   }
