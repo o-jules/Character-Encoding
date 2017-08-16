@@ -1,13 +1,3 @@
-const BASES: ReadonlyArray<number> = [
-  64, // Math.pow(2, 6),
-  4096, // Math.pow(2, 12),
-  262144, // Math.pow(2, 18),
-]
-
-const LEADINGS: number[] = [
-  128, 192,
-  224, 240,
-]
 
 function convert(codepoint: number): number[] {
   if (codepoint >= 0 && codepoint <= 0x007f) {
@@ -26,12 +16,18 @@ function convert(codepoint: number): number[] {
   }
 
   var list = new Array<number>()
-  let order = count - 1
+  let order = count - 1, pad = 0
   let byte: number
   while (order >= 0) {
-    byte = codepoint >> (order * 6)
-    codepoint &= ~(byte << (order * 6))
-    list.push(byte += LEADINGS[order === count - 1 ? order : 0])
+    pad = order * 6
+    byte = codepoint >> pad
+    codepoint &= ~(byte << pad)
+
+    pad = order == count - 1 ? 7 - order : 7;
+    while (pad < 8) {
+      byte |= 1 << pad++
+    }
+    list.push(byte)
 
     order--
   }

@@ -1,11 +1,6 @@
 #include "types.h"
 #include "encode.h"
 
-Codepoint LEADINGS[] = {
-    128, 192,
-    224, 240,
-};
-
 /// 检测Unicode字符的区间
 int detect_char(Codepoint cp)
 {
@@ -43,7 +38,8 @@ ByteStream *encode(Codepoint cp)
       int pad = order * 6;
       byte = cp >> pad;
       cp &= ~(byte << pad);
-      byte += LEADINGS[order == count - 1 ? order : 0];
+      pad = order == count - 1 ? 7 - order : 7;
+      byte |= ~0 >> pad << pad;
       list->push_back(byte);
       order--;
     }
