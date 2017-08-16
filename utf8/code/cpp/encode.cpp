@@ -1,16 +1,17 @@
 #include "types.h"
+#include "vars.h"
 #include "encode.h"
 
 /// 检测Unicode字符的区间
 int detect_char(Codepoint cp)
 {
-  if (cp <= 0x007f)
+  if (cp <= U1_L)
     return 1;
-  if (cp <= 0x07ff)
+  if (cp <= U2_L)
     return 2;
-  if (cp <= 0xffff)
+  if (cp <= U3_L)
     return 3;
-  if (cp <= 0x10ffff)
+  if (cp <= U4_L)
     return 4;
 
   return 0;
