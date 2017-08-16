@@ -20,6 +20,7 @@ int main(int argc, char **argv)
   }
 
   auto cs = decode(bs);
+  printf("Decoding:\n");
   for (auto &p : *cs)
   {
     printf("dec: %09llu\thex: %06llx\n", p, p);
@@ -30,7 +31,7 @@ int main(int argc, char **argv)
   Codepoint cp = 19990L; //'世';
   ByteStream *dc;
   dc = encode(cp);
-  printf("Decoding:\n");
+  printf("Encoding:\n");
   for (auto &p : *dc) {
     printf("%u\n", p);
   }

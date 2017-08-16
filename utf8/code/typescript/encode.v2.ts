@@ -30,7 +30,7 @@ function convert(codepoint: number): number[] {
   let byte: number
   while (order >= 0) {
     byte = codepoint >> (order * 6)
-    codepoint -= byte * BASES[order - 1]
+    codepoint &= ~(byte << (order * 6))
     list.push(byte += LEADINGS[order === count - 1 ? order : 0])
 
     order--
