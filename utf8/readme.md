@@ -39,7 +39,7 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
 | 1110xxxx  | 2^7 + 2^6 + 2^5 + ... = 224 + n (n >= 0 && n <= 15)       |
 | 11110xxx  | 2^7 + 2^6 + 2^5 + 2^4 + ... = 240 + n (n >= 0 && n <= 7)  |
 
-  具体的算法参照源代码：[encode.ts](./code/typescript/encode.ts) 或 [encode.cpp](./code/cpp/encode.cpp)。
+  具体的算法参照源代码：[encode.ts](./code/typescript/encode.ts) 或 [encode.cpp](./code/cpp/include/encode.h)。
 
 ## 解碼
 
@@ -49,7 +49,7 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
   fn decode(stream: Vec<u8>) -> Vec<u64>
   ```
 
-  具体算法参照源代码：[decode.cpp](./code/cpp/decode.cpp)
+  具体算法参照源代码：[decode.cpp](./code/cpp/include/decode.h)
 
 ## 附录/Appendix
 
