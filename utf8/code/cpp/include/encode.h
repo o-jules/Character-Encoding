@@ -2,7 +2,6 @@
 #define _UTF8_ENCODE_H
 #include "types.h"
 #include "vars.h"
-#include "encode.h"
 
 namespace utf8
 {
@@ -52,9 +51,11 @@ bytes *encode(u64 point)
   return list;
 };
 
-bytes *encode_stream(codepoints &s) {
+bytes *encode_stream(codepoints &s)
+{
   auto list = new bytes();
-  for (auto &i : s) {
+  for (auto &i : s)
+  {
     auto c = encode(i);
     list->insert(list->end(), c->begin(), c->end());
 

@@ -4,7 +4,6 @@
 #include <cstdio>
 #include "vars.h"
 #include "types.h"
-#include "decode.h"
 
 namespace utf8
 {
