@@ -6,7 +6,7 @@
 /**
  * 检测该字节属于哪一种
  */
-int detect(Byte b);
+int detect_byte(Byte b);
 
 /**
  * 对字节流进行解码，这里不对BOM进行处理。

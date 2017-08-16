@@ -5,9 +5,10 @@
 /// 按位数向右(相当于乘以 2 ^ n)
 #define LPAD(b, p) (b) * (1 << ((p)*6))
 
-unsigned int BASES[4] = {B10X, B110X, B1110X, B11110X};
+/// 移除字节二进制左侧的 n 个1
+#define LDROP(b, n) b ^= (~0 >> (8 - n) << (8 - n))
 
-int detect(Byte b)
+int detect_byte(Byte b)
 {
   if (b < B10X)
     return 1;
@@ -24,12 +25,13 @@ int detect(Byte b)
 CodepointStream *decode(ByteStream &bs)
 {
   CodepointStream *str = new CodepointStream();
-  int state = 0, acc = 0;
-  Codepoint cp = 0; // code point
 
+  Codepoint cp = 0; // code point
+  int state = 0, acc = 0;
+  int size = 0;
   for (auto &b : bs)
   {
-    int size = detect(b);
+    size = detect_byte(b);
 
     if (size == 0)
     {
@@ -42,7 +44,7 @@ CodepointStream *decode(ByteStream &bs)
       else
       {
         acc++;
-        cp += LPAD(b - B10X, state - acc);
+        cp += LPAD(LDROP(b, 1), state - acc);
       }
     }
     else
@@ -57,7 +59,7 @@ CodepointStream *decode(ByteStream &bs)
       {
         if (state != 0)
           str->push_back(cp);
-        cp = size == 1 ? (Codepoint)b : LPAD(b - BASES[size - 1], size - 1);
+        cp = (Codepoint) (size == 1 ? b : LPAD(LDROP(b, size), size - 1));
         state = size;
         acc = 1;
       }
