@@ -16,9 +16,9 @@ function convert(codepoint: number): number[] {
   }
 
   var list = new Array<number>()
-  let order = count - 1, pad = 0
+  let order = count, pad = 0
   let byte: number
-  while (order >= 0) {
+  while (order-- > 0) {
     pad = order * 6
     byte = codepoint >> pad
     codepoint &= ~(byte << pad)
@@ -28,8 +28,6 @@ function convert(codepoint: number): number[] {
       byte |= 1 << pad++
     }
     list.push(byte)
-
-    order--
   }
 
   return list

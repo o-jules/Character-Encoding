@@ -17,9 +17,9 @@ int detect_char(Codepoint cp)
 }
 
 /// 编码，将Unicode codepoint转换成字节流
-ByteStream *encode(Codepoint cp)
+ByteStream *encode(Codepoint point)
 {
-  int count = detect_char(cp);
+  int count = detect_char(point);
   if (count == 0)
     return nullptr;
 
@@ -27,21 +27,19 @@ ByteStream *encode(Codepoint cp)
 
   if (count == 1)
   {
-    list->push_back((Byte)cp);
+    list->push_back((Byte)point);
   }
   else
   {
-    int order = count - 1, pad = 0;
-    Byte byte;
-    while (order >= 0)
+    int i = count, s = count - 1, j = 0;
+    Byte b;
+    while (i-- > 0)
     {
-      int pad = order * 6;
-      byte = cp >> pad;
-      cp &= ~(byte << pad);
-      pad = order == count - 1 ? 7 - order : 7;
-      byte |= ~0 >> pad << pad;
-      list->push_back(byte);
-      order--;
+      j = i * 6;
+      b = point >> j;
+      point &= ~(b << j);
+      j = i == s ? 7 - i : 7;
+      list->push_back(b |= ~0 >> j << j);
     }
   }
 
