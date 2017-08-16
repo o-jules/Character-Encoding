@@ -8,7 +8,7 @@ namespace utf8
 {
 
 /// 检测Unicode字符的区间
-int detect_char(u64 cp)
+int detect_char(u64 const &cp)
 {
   if (cp <= U1_L)
     return 1;

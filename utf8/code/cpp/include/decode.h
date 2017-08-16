@@ -10,7 +10,7 @@ namespace utf8
 {
 
 /// 按位数向右(相当于乘以 2 ^ n)
-inline u64 lpad(u8 b, int d)
+inline u64 lpad(u8 const &b, int const &d)
 {
   return ((u64)b) << (d * 6);
 }
@@ -18,13 +18,14 @@ inline u64 lpad(u8 b, int d)
 /// 移除字节二进制左侧的 n 个1
 inline int ldrop(size_t i)
 {
-  return ~0u >> (8 - i) << (8 - i);
+  i = 8 - i;
+  return ~0u >> i << i;
 }
 
 /**
  * 检测该字节属于哪一种
  */
-int detect_byte(u8 b)
+int detect_byte(u8 const &b)
 {
   if (b < B10X)
     return 1;
@@ -63,7 +64,7 @@ codepoints *decode(bytes &bs)
       else
       {
         acc++;
-        cp += lpad(b ^ ldrop(1), state - acc);
+        cp |= lpad(b ^ ldrop(1), state - acc);
       }
     }
     else
@@ -79,14 +80,7 @@ codepoints *decode(bytes &bs)
         if (state != 0)
           str->push_back(cp);
 
-        if (size == 1)
-        {
-          cp = (u64)b;
-        }
-        else
-        {
-          cp = lpad(b ^ ldrop(size), size - 1);
-        }
+        cp = size == 1 ? (u64)b : lpad(b ^ ldrop(size), size - 1);
         state = size;
         acc = 1;
       }
