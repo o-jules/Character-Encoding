@@ -27,11 +27,8 @@ bool is_bom(FILE *f)
   u8 b;
   int i = 0;
   while (i <= 2)
-  {
-    if (!fread(&b, BYTE_SIZE, 1, f) || b != BOM[i])
+    if (!fread(&b, BYTE_SIZE, 1, f) || b != BOM[i++])
       break;
-    i++;
-  }
 
   bool s = i == 3;
   if (!s)
