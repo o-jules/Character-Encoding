@@ -30,7 +30,7 @@ bool is_valid_stream(bytes &bs)
   int state = 0, acc = 0;
   int size = 0;
 
-  for (auto &b : bs)
+  for (auto const &b : bs)
   {
     size = detect_byte(b);
 

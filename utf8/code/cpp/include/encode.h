@@ -1,7 +1,9 @@
 #ifndef _UTF8_ENCODE_H
 #define _UTF8_ENCODE_H
+
 #include "types.h"
 #include "vars.h"
+#include "helper.h"
 
 namespace utf8
 {
@@ -32,8 +34,9 @@ bytes *encode(codepoints &cplist)
 {
   auto list = new bytes();
 
-  u64 point = 0;
-  for (auto &p : cplist)
+  u64 point = 0ul;
+  u8 b = 0u;
+  for (auto const &p : cplist)
   {
     int count = detect_char(p);
     if (count == 0)
@@ -46,15 +49,14 @@ bytes *encode(codepoints &cplist)
     }
     else
     {
-      int i = count, s = count - 1, j = 0;
-      u8 b;
+      int &i = count, s = count - 1, j = 0;
       while (i-- > 0)
       {
         j = i * 6;
         b = point >> j;
         point &= ~(b << j);
-        j = i == s ? 7 - i : 7;
-        list->push_back(b |= ~0ul >> j << j);
+        j = i == s ? i + 1 : 1;
+        list->push_back(b |= ldrop(j));
       }
     }
   }

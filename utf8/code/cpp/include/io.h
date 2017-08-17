@@ -52,7 +52,8 @@ codepoints *decode_file(const char *filename)
 /**
  * 将字符串读取成字节数组
  */
-bytes *read_str(const char *str) {
+bytes *read_str(const char *str)
+{
   utf8::u8 *b;
   b = (utf8::u8 *)str;
   bytes *data = new bytes();
@@ -65,7 +66,6 @@ bytes *read_str(const char *str) {
 
   return data;
 };
-
 }
 
 #endif

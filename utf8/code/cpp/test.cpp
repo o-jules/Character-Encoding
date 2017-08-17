@@ -16,15 +16,16 @@ int main(int argc, char **argv)
   // release dynamic memory
   delete cs;
 
-  utf8::codepoints cp = { 19990L, 30028L }; //'世', '界';
+  utf8::codepoints cp = { 72L, 19990L, 30028L, 131123L }; //'H', 世', '界', '𠀳';
   auto dc = utf8::encode(cp);
   printf("\nEncoding:\n");
 
   FILE *fw = fopen("write.tmp", "wb");
   for (auto &p : *dc) {
-    printf("%u\n", p);
+    printf("%u ", p);
     fwrite(&p, utf8::BYTE_SIZE, 1, fw);
   }
+  printf("\n");
   fclose(fw);
 
   return 0;

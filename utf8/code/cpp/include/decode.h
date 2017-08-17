@@ -2,31 +2,14 @@
 #define _UTF8_DECODE_H
 
 #include <cstdio>
-#include "vars.h"
 #include "types.h"
+#include "vars.h"
+#include "helper.h"
 
 namespace utf8
 {
-/// 函数声明
-u64 lpad(u8 const &, int const &);
-int ldrop(size_t);
 int detect_byte(u8 const &);
 codepoints *decode(bytes &);
-
-/// 内部函数，不作为提供给外部的API使用
-/// 按位数向右(相当于乘以 2 ^ n)
-inline u64 lpad(u8 const &b, int const &d)
-{
-  return ((u64)b) << (d * 6);
-}
-
-/// 内部函数，不作为提供给外部的API使用
-/// 移除字节二进制左侧的 n 个1
-inline int ldrop(size_t i)
-{
-  i = 8 - i;
-  return ~0u >> i << i;
-}
 
 /**
  * 检测该字节属于哪一种
@@ -53,11 +36,13 @@ int detect_byte(u8 const &b)
 codepoints *decode(bytes &bs)
 {
   auto str = new codepoints();
-  u64 cp = 0; // code point
-  int state = 0, acc = 0;
+
+  u64 cp = 0; // 当前的Unicode codepoint
+  int state = 0, // 当前的状态
+      acc = 0; // 当前的积累
   int size = 0;
 
-  for (auto &b : bs)
+  for (auto const &b : bs)
   {
     size = detect_byte(b);
 
@@ -72,7 +57,7 @@ codepoints *decode(bytes &bs)
       else
       {
         acc++;
-        cp |= lpad(b ^ ldrop(1), state - acc);
+        cp |= lpad(b ^ B10X, state - acc);
       }
     }
     else
@@ -96,12 +81,11 @@ codepoints *decode(bytes &bs)
   }
 
   if (state != 0)
-  {
     str->push_back(cp);
-  }
 
   return str;
 };
-};
+
+} // end of namespace
 
 #endif
