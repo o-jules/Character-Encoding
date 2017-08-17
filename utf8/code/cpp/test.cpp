@@ -3,6 +3,7 @@
 #include "include/decode.h"
 #include "include/encode.h"
 #include "include/io.h"
+#include "include/validate.h"
 
 int main(int argc, char **argv)
 {
@@ -16,7 +17,7 @@ int main(int argc, char **argv)
   delete cs;
 
   utf8::codepoints cp = { 19990L, 30028L }; //'世', '界';
-  auto dc = utf8::encode_stream(cp);
+  auto dc = utf8::encode(cp);
   printf("\nEncoding:\n");
 
   FILE *fw = fopen("write.tmp", "wb");
@@ -24,6 +25,7 @@ int main(int argc, char **argv)
     printf("%u\n", p);
     fwrite(&p, utf8::BYTE_SIZE, 1, fw);
   }
+  fclose(fw);
 
   return 0;
 }

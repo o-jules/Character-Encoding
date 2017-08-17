@@ -12,6 +12,8 @@ typedef uint64_t u64;
 typedef std::vector<u8> bytes;
 typedef std::vector<u64> codepoints;
 
+typedef uint32_t u32;
+
 static const size_t BYTE_SIZE = sizeof(u8);
 
 } // end of namespace

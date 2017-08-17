@@ -28,6 +28,7 @@ int main(int argc, char **argv)
   {
     printf("%d ", b);
   }
+  printf("\n");
 
   return 0;
 }

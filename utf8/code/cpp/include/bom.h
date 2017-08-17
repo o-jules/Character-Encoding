@@ -6,12 +6,22 @@
 
 namespace utf8
 {
+/// 函数声明
+bool is_bom(FILE *);
 
+/**
+ * @const BOM UTF8-BOM编码的BOM字节(byte order mark)
+ */
 static const u8 BOM[3] = {239, 187, 191};
 
-/// 检测一个文件是否文件头带BOM
-/// 如果是，返回true，并将文件读取指针置于BOM之后；
-/// 如果不是，返回false；文件读取指针置于文件头。
+/**
+ * @param f 文件IO指针
+ *
+ * \brief 检测一个文件是否文件头带BOM
+ *
+ * 如果是，返回true，并将文件读取指针置于BOM之后；
+ * 如果不是，返回false；文件读取指针置于文件头。
+ */
 bool is_bom(FILE *f)
 {
   u8 b;

@@ -7,8 +7,14 @@
 
 namespace utf8
 {
+/// 函数声明
+bytes *read_file(const char *);
+codepoints *decode_file(const char *);
+bytes *read_str(const char *str);
 
-/// 将文本文件读取成字节数组
+/**
+ * 将文本文件读取成字节数组
+ */
 bytes *read_file(const char *filename)
 {
   FILE *f;
@@ -25,10 +31,14 @@ bytes *read_file(const char *filename)
   {
     data->push_back(b);
   }
+
+  fclose(f);
   return data;
 };
 
-/// 将utf8编码的文本文件解码成Unicode codepoint
+/**
+ * 将utf8编码的文本文件解码成Unicode codepoint
+ */
 codepoints *decode_file(const char *filename)
 {
   auto data = read_file(filename);
@@ -37,6 +47,23 @@ codepoints *decode_file(const char *filename)
     return nullptr;
   }
   return decode(*data);
+};
+
+/**
+ * 将字符串读取成字节数组
+ */
+bytes *read_str(const char *str) {
+  utf8::u8 *b;
+  b = (utf8::u8 *)str;
+  bytes *data = new bytes();
+
+  while (*b != '\0')
+  {
+    data->push_back(*b);
+    b++;
+  }
+
+  return data;
 };
 
 }

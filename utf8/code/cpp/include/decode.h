@@ -7,13 +7,20 @@
 
 namespace utf8
 {
+/// 函数声明
+u64 lpad(u8 const &, int const &);
+int ldrop(size_t);
+int detect_byte(u8 const &);
+codepoints *decode(bytes &);
 
+/// 内部函数，不作为提供给外部的API使用
 /// 按位数向右(相当于乘以 2 ^ n)
 inline u64 lpad(u8 const &b, int const &d)
 {
   return ((u64)b) << (d * 6);
 }
 
+/// 内部函数，不作为提供给外部的API使用
 /// 移除字节二进制左侧的 n 个1
 inline int ldrop(size_t i)
 {
@@ -39,6 +46,8 @@ int detect_byte(u8 const &b)
 };
 
 /**
+ * @param bs 字符流（类型为 std::vector<u8>）
+ *
  * 对字节流进行解码，这里不对BOM进行检测和处理。
  */
 codepoints *decode(bytes &bs)

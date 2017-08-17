@@ -6,6 +6,10 @@
 namespace utf8
 {
 
+int detect_char(u64 const &);
+bytes *encode(codepoints &);
+bytes *encode_char(u64 &);
+
 /// 检测Unicode字符的区间
 int detect_char(u64 const &cp)
 {
@@ -21,47 +25,51 @@ int detect_char(u64 const &cp)
   return 0;
 }
 
-/// 编码，将Unicode codepoint转换成字节流
-bytes *encode(u64 point)
+/**
+ * 编码，将Unicode codepoint转换成字节流
+ */
+bytes *encode(codepoints &cplist)
 {
-  int count = detect_char(point);
-  if (count == 0)
-    return nullptr;
-
   auto list = new bytes();
 
-  if (count == 1)
+  u64 point = 0;
+  for (auto &p : cplist)
   {
-    list->push_back((u8)point);
-  }
-  else
-  {
-    int i = count, s = count - 1, j = 0;
-    u8 b;
-    while (i-- > 0)
+    int count = detect_char(p);
+    if (count == 0)
+      continue;
+
+    point = p;
+    if (count == 1)
     {
-      j = i * 6;
-      b = point >> j;
-      point &= ~(b << j);
-      j = i == s ? 7 - i : 7;
-      list->push_back(b |= ~0ul >> j << j);
+      list->push_back((u8)point);
+    }
+    else
+    {
+      int i = count, s = count - 1, j = 0;
+      u8 b;
+      while (i-- > 0)
+      {
+        j = i * 6;
+        b = point >> j;
+        point &= ~(b << j);
+        j = i == s ? 7 - i : 7;
+        list->push_back(b |= ~0ul >> j << j);
+      }
     }
   }
 
   return list;
 };
 
-bytes *encode_stream(codepoints &s)
+/**
+ * 将单个 codepoint 编码
+ */
+bytes *encode_char(u64 &c)
 {
-  auto list = new bytes();
-  for (auto &i : s)
-  {
-    auto c = encode(i);
-    list->insert(list->end(), c->begin(), c->end());
-
-    delete c;
-  }
-  return list;
+  auto list = codepoints();
+  list.push_back(c);
+  return encode(list);
 };
 
 } // end of namespace
