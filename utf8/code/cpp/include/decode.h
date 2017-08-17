@@ -37,50 +37,52 @@ codepoints *decode(bytes &bs)
 {
   auto str = new codepoints();
 
+  bool fatal = false;
   u64 cp = 0; // 当前的Unicode codepoint
-  int state = 0, // 当前的状态
-      acc = 0; // 当前的积累
-  int size = 0;
+  int s = 0,  // 之前/当前的状态，state
+      a = 0,  // 当前的积累, accumulation
+      i = 0;  // 临时数据
 
   for (auto const &b : bs)
   {
-    size = detect_byte(b);
+    i = detect_byte(b);
 
-    if (size == 0)
+    if (i == 0)
     {
-      // 编码中存在错误
-      if (acc + 1 > state)
+      // 编码存在错误，后续的字节多于所需
+      if (a + 1 > s)
       {
         printf("Encoding contains errors.");
         break;
       }
       else
       {
-        acc++;
-        cp |= lpad(b ^ B10X, state - acc);
+        a++;
+        cp |= lpad(b ^ B10X, s - a);
       }
     }
     else
     {
-      // 编码中存在错误
-      if (state - acc != 0)
+      // 编码中存在错误，已存储的字节无效
+      if (s - a != 0)
       {
         printf("Encoding contains errors.");
+        fatal = true;
         break;
       }
       else
       {
-        if (state != 0)
+        if (s != 0)
           str->push_back(cp);
 
-        cp = size == 1 ? (u64)b : lpad(b ^ ldrop(size), size - 1);
-        state = size;
-        acc = 1;
+        cp = i == 1 ? (u64)b : lpad(b ^ ldrop(i), i - 1);
+        s = i;
+        a = 1;
       }
     }
   }
 
-  if (state != 0)
+  if (s != 0 && !fatal)
     str->push_back(cp);
 
   return str;

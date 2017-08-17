@@ -34,29 +34,33 @@ bytes *encode(codepoints &cplist)
 {
   auto list = new bytes();
 
-  u64 point = 0ul;
+  u64 p = 0ul;
   u8 b = 0u;
-  for (auto const &p : cplist)
+  int i = 0, // 字节数
+      s = 0,
+      j = 0; // 临时变量
+
+  for (auto const &cp : cplist)
   {
-    int count = detect_char(p);
-    if (count == 0)
+    i = detect_char(cp);
+    if (!i)
       continue;
 
-    point = p;
-    if (count == 1)
+    if (i == 1)
     {
-      list->push_back((u8)point);
+      list->push_back((u8)cp);
     }
     else
     {
-      int &i = count, s = count - 1, j = 0;
+      p = cp;
+      s = i - 1;
       while (i-- > 0)
       {
         j = i * 6;
-        b = point >> j;
-        point &= ~(b << j);
-        j = i == s ? i + 1 : 1;
-        list->push_back(b |= ldrop(j));
+        b = p >> j;
+        p &= ~(b << j);
+        b |= (i == s) ? ldrop(i + 1) : B10X;
+        list->push_back(b);
       }
     }
   }
