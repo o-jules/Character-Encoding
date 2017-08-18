@@ -7,25 +7,9 @@
 
 namespace utf8
 {
-
-int detect_char(u64 const &);
+/// 函数声明
 bytes *encode(codepoints &);
 bytes *encode_char(u64 &);
-
-/// 检测Unicode字符的区间
-int detect_char(u64 const &cp)
-{
-  if (cp <= U1_L)
-    return 1;
-  if (cp <= U2_L)
-    return 2;
-  if (cp <= U3_L)
-    return 3;
-  if (cp <= U4_L)
-    return 4;
-
-  return 0;
-}
 
 /**
  * 编码，将Unicode codepoint转换成字节流

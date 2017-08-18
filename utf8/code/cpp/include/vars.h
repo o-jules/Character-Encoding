@@ -5,6 +5,7 @@
 
 namespace utf8
 {
+static const int ENCODE_ERROR = 1;
 
 static const u8 B10X = 128u;    // 0b10000000u
 static const u8 B110X = 192u;   // 0b11000000u
