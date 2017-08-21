@@ -7,18 +7,18 @@
 namespace utf8
 {
 /// 函数声明
-u64 lpad(u8 const &, size_t const &);
+u32 lpad(u8 const &, size_t const &);
 int ldrop(size_t);
 int detect_byte(u8 const &);
-int detect_char(u64 const &);
+int detect_char(u32 const &);
 
 static const u8 FULL_BYTE = ~(u8)0u;
 
 /// 内部函数，不作为提供给外部的API使用
 /// 按位数的六倍向右(相当于乘以 2 ^ (6 * n))
-inline u64 lpad(u8 const &b, size_t const &d)
+inline u32 lpad(u8 const &b, size_t const &d)
 {
-  return ((u64)b) << (d * 6);
+  return ((u32)b) << (d * 6);
 };
 
 /// 内部函数，不作为提供给外部的API使用
@@ -49,7 +49,7 @@ int detect_byte(u8 const &b)
 
 
 /// 检测Unicode字符的区间
-int detect_char(u64 const &cp)
+int detect_char(u32 const &cp)
 {
   if (cp <= U1_L)
     return 1;

@@ -11,7 +11,7 @@ int main(int argc, char **argv)
   printf("Decoding:\n");
   for (auto &p : *cs)
   {
-    printf("dec: %08llu\thex: %06llx\n", p, p);
+    printf("dec: %08u\thex: %06x\n", p, p);
   }
   // release dynamic memory
   delete cs;

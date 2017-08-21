@@ -8,11 +8,9 @@ namespace utf8
 {
 
 typedef uint8_t u8;
-typedef uint64_t u64;
-typedef std::vector<u8> bytes;
-typedef std::vector<u64> codepoints;
-
 typedef uint32_t u32;
+typedef std::vector<u8> bytes;
+typedef std::vector<u32> codepoints;
 
 static const size_t BYTE_SIZE = sizeof(u8);
 

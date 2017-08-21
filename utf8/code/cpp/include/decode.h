@@ -19,7 +19,7 @@ codepoints *decode(bytes &bs)
 {
   auto str = new codepoints();
 
-  u64 cp = 0; // 当前的Unicode codepoint
+  u32 cp = 0; // 当前的Unicode codepoint
   int s = 0,  // 之前/当前的状态，state
       a = 0,  // 当前的积累, accumulation
       i = 0;  // 临时数据
@@ -58,7 +58,7 @@ codepoints *decode(bytes &bs)
         a = 1;
 
         if (i == 1)
-          str->push_back((u64)b);
+          str->push_back((u32)b);
         else
           cp = lpad(b ^ ldrop(i), i - 1);
       }

@@ -27,7 +27,7 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
   已知一个字符的Unicode Codepoint是 n，求其UTF8储存的字节。
 
   ```rust
-  fn encode(codepoint: u64) -> Vec<u8>
+  fn encode(codepoint: u32) -> Vec<u8>
   ```
 
   二进制转换基本表格：
@@ -46,7 +46,7 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
   已知一序列的UTF8二进制码，将其解码为Unicode codepoint。
 
   ```rust
-  fn decode(stream: Vec<u8>) -> Vec<u64>
+  fn decode(stream: Vec<u8>) -> Vec<u32>
   ```
 
   具体算法参照源代码：[decode.cpp](./code/cpp/include/decode.h)
@@ -58,7 +58,7 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
 
 由于UTF8是变长编码，所以索引字符不是数组索引的时间复杂度 O(1)，而是和解码的时间复杂度相等同。
 
-（Mozilla的Rust就因为这个问题，在 charAt类 方法上龃龉不前，时有反复。）
+（Mozilla的Rust就因为这个问题，在 charAt类 方法上龃龉不前，时有反覆。）
 
 ## 附录/Appendix
 

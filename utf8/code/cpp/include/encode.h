@@ -9,7 +9,7 @@ namespace utf8
 {
 /// 函数声明
 bytes *encode(codepoints &);
-bytes *encode_char(u64 &);
+bytes *encode_char(u32 &);
 
 /**
  * 编码，将Unicode codepoint转换成字节流
@@ -18,7 +18,7 @@ bytes *encode(codepoints &cplist)
 {
   auto list = new bytes();
 
-  u64 p = 0ul;
+  u32 p = 0ul;
   u8 b = 0u;
   int i = 0, // 字节数
       s = 0,
@@ -55,7 +55,7 @@ bytes *encode(codepoints &cplist)
 /**
  * 将单个 codepoint 编码
  */
-bytes *encode_char(u64 &c)
+bytes *encode_char(u32 &c)
 {
   auto list = codepoints();
   list.push_back(c);
