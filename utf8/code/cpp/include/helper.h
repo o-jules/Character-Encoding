@@ -1,11 +1,16 @@
-#ifndef _UTF8_HELPER
-#define _UTF8_HELPER
+#ifndef _UTF8_HELPER_H
+#define _UTF8_HELPER_H
+
+#include "types.h"
+#include "vars.h"
 
 namespace utf8
 {
 /// 函数声明
 u64 lpad(u8 const &, size_t const &);
 int ldrop(size_t);
+int detect_byte(u8 const &);
+int detect_char(u64 const &);
 
 static const u8 FULL_BYTE = ~(u8)0u;
 
@@ -22,6 +27,40 @@ inline int ldrop(size_t i)
 {
   i = 8 - i;
   return FULL_BYTE >> i << i;
+};
+
+
+/**
+ * 检测该字节属于哪一种
+ */
+int detect_byte(u8 const &b)
+{
+  if (b < B10X)
+    return 1;
+  if (b >= B11110X)
+    return 4;
+  if (b >= B1110X)
+    return 3;
+  if (b >= B110X)
+    return 2;
+
+  return 0;
+};
+
+
+/// 检测Unicode字符的区间
+int detect_char(u64 const &cp)
+{
+  if (cp <= U1_L)
+    return 1;
+  if (cp <= U2_L)
+    return 2;
+  if (cp <= U3_L)
+    return 3;
+  if (cp <= U4_L)
+    return 4;
+
+  return 0;
 };
 
 } // end of namespace

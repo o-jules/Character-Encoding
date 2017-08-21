@@ -21,18 +21,17 @@ bytes *read_file(const char *filename)
   f = fopen(filename, "rb");
   if (!f)
   {
-    printf("File `%s` open failed.", filename);
+    printf("Failed to open file `%s`.", filename);
     return nullptr;
   }
 
-  auto data = new bytes();
   u8 b;
+  auto data = new bytes();
   while (fread(&b, BYTE_SIZE, 1, f))
-  {
     data->push_back(b);
-  }
 
   fclose(f);
+
   return data;
 };
 
