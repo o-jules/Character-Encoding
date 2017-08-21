@@ -41,7 +41,7 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
 
   具体的算法参照源代码：[encode.ts](./code/typescript/encode.ts) 或 [encode.cpp](./code/cpp/include/encode.h)。
 
-## 解碼
+## 解码
 
   已知一序列的UTF8二进制码，将其解码为Unicode codepoint。
 
@@ -50,6 +50,15 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
   ```
 
   具体算法参照源代码：[decode.cpp](./code/cpp/include/decode.h)
+
+
+### 字符索引的时间复杂度
+
+对于长度为 N 的UTF8字符串，查找到第n个字符，其时间复杂度为 O(n)。
+
+由于UTF8是变长编码，所以索引字符不是数组索引的时间复杂度 O(1)，而是和解码的时间复杂度相等同。
+
+（Mozilla的Rust就因为这个问题，在 charAt类 方法上龃龉不前，时有反复。）
 
 ## 附录/Appendix
 
