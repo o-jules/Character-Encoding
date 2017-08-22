@@ -55,6 +55,6 @@ bool is_valid_stream(bytes &bs)
   return true;
 };
 
-} // end of namespace
+} // namespace utf8
 
 #endif

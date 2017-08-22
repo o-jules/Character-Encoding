@@ -63,6 +63,6 @@ int detect_char(u32 const &cp)
   return 0;
 };
 
-} // end of namespace
+} // namespace utf8
 
 #endif

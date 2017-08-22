@@ -62,6 +62,6 @@ bytes *encode_char(u32 &c)
   return encode(list);
 };
 
-} // end of namespace
+} // namespace utf8
 
 #endif

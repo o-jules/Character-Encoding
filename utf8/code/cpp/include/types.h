@@ -15,6 +15,6 @@ typedef std::vector<u32> codepoints;
 static const size_t BYTE_SIZE = sizeof(u8);
 static const size_t CODEPOINT_SIZE = sizeof(u32);
 
-} // end of namespace
+} // namespace utf8
 
 #endif

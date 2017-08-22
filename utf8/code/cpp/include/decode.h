@@ -68,6 +68,6 @@ codepoints *decode(bytes &bs)
   return str;
 };
 
-} // end of namespace
+} // namespace utf8
 
 #endif

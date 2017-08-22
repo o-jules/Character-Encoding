@@ -65,6 +65,7 @@ bytes *read_str(const char *str)
 
   return data;
 };
-}
+
+} // namespace utf8
 
 #endif

@@ -24,6 +24,6 @@ static const u32 U3_L = 0xFFFFu;
 
 static const u32 U4_F = 0x10000u;
 static const u32 U4_L = 0x10FFFFu;
-} // end of namespace
+} // namespace utf8
 
 #endif

@@ -36,6 +36,6 @@ bool contains_bom(FILE *f)
   return s;
 };
 
-} // end of namespace
+} // namespace utf8
 
 #endif
