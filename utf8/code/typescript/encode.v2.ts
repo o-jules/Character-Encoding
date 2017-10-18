@@ -1,5 +1,7 @@
 
 function convert(codepoint: number): number[] {
+  codepoint ^= 0;
+
   if (codepoint >= 0 && codepoint <= 0x007f) {
     return [codepoint]
   }

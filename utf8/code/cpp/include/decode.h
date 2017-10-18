@@ -28,6 +28,11 @@ codepoints *decode(bytes &bs)
   {
     i = detect_byte(b);
 
+    if (i == -1) {
+      // encoding error
+      break;
+    }
+
     if (i == 0)
     {
       if (a >= s)
