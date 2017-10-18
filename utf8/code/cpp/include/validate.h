@@ -34,17 +34,22 @@ bool is_valid_stream(bytes &bs)
   {
     size = detect_byte(b);
 
+    if (size == -1) {
+      return false;
+    }
+
     if (size == 0)
     {
       // 编码中存在错误
-      if (acc + 1 > state)
+      if (acc >= state)
         return false;
+
       acc++;
     }
     else
     {
       // 编码中存在错误
-      if (state - acc != 0)
+      if (acc != state)
         return false;
 
       state = size;
