@@ -11,6 +11,13 @@ UTF8 是一种兼容 ASCII 编码的变长编码。
 |      3      |  16  | U+0800	- U+FFFF     | 1110xxxx 10xxxxxx 10xxxxxx            |
 |      4      |  21  | U+10000 - U+10FFFF  | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx   |
 
+转换成十进制，即：
+字节 0xxxxxxx 范围是：0   - 127
+字节 10xxxxxx 范围是：128 - 191
+字节 110xxxxx 范围是：192 - 223
+字节 1110xxxx 范围是：224 - 239
+字节 11110xxx 范围是：240 - 247
+
 ### 样例
 
 | Character	| Octal   |	Binary code point             | Binary UTF-8                               |

@@ -18,7 +18,7 @@ bytes *encode(codepoints &cplist)
 {
   auto list = new bytes();
 
-  u32 p = 0ul;
+  u32 p = 0u;
   u8 b = 0u;
   int i = 0, // 字节数
       s = 0,
