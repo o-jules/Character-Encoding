@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
   fw = fopen("write.utf8.tmp", "wb");
   for (auto &p : *dc) {
-    printf("%x ", p, p);
+    printf("%x-%u ", p, p);
     fwrite(&p, utf8::BYTE_SIZE, 1, fw);
   }
   printf("\n");
