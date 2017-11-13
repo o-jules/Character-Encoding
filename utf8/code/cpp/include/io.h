@@ -66,6 +66,55 @@ bytes *read_str(const char *str)
   return data;
 };
 
+class FileByteBuffer {
+  private:
+    FILE *f = nullptr;
+
+  public:
+    static size_t BYTE_SIZE = sizeof(u8);
+
+    FileBuffer() {}
+    FileBuffer(const char *filename) {
+      open(filename);
+    }
+
+    ~FileBuffer() {}
+
+    bool open(const char *filename) {
+      this->f = fopen(filename, "rb");
+      if (!this->f)
+      {
+        printf("Failed to open file `%s`.", filename);
+        return false;
+      }
+
+      return true;
+    }
+
+    bool hasBuffer() {
+      return this->f != nullptr;
+    }
+
+    u8 next() {
+      u8 b;
+      if (fread(&b, BYTE_SIZE, 1, this->f))
+        return b;
+
+      // throw FILE_END;
+    }
+
+    bytes to_bytes() {
+      // reset to header
+      u8 b;
+      auto data = new bytes();
+      while (fread(&b, BYTE_SIZE, 1, f))
+        data->push_back(b);
+
+      return data;
+    }
+
+};
+
 } // namespace utf8
 
 #endif
