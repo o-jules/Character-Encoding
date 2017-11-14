@@ -35,7 +35,7 @@ inline int ldrop(size_t i)
  */
 int detect_byte(u8 const &b)
 {
-  if (cp >= B111110X)
+  if (b >= B111110X)
     return -1;
 
   if (b < B10X)
