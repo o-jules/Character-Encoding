@@ -18,10 +18,10 @@ int main(int argc, char **argv)
   auto bf = utf8::DecodeBuffer();
   while (fread(&b, utf8::BYTE_SIZE, 1, pfile)) {
     try {
-      getchar();
-      printf("%u ", b);
+      // getchar();
+      printf("dec = %u, hex = %x\n", b, b);
       if (bf.push(b)) {
-        printf("character: %llu\n", bf.current());
+        printf("character: dec = %llu, hex = %llx\n\n", bf.current(), bf.current());
       }
     } catch (int e) {
       break;

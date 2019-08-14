@@ -38,7 +38,7 @@ codepoints *decode(bytes &bs)
       if (a >= s)
       {
         // 编码存在错误，后续的字节多于所需
-        printf("Errors: bytes overflow.");
+        fprintf(stderr, "Error: overflow bytes.\n");
         break;
       }
       else
@@ -54,7 +54,7 @@ codepoints *decode(bytes &bs)
       if (s != a)
       {
         // 编码中存在错误，前一字符的编码不足
-        printf("Errors: bytes not sufficient.");
+        fprintf(stderr, "Error: insufficient bytes.\n");
         break;
       }
       else

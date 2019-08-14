@@ -21,7 +21,7 @@ bytes *read_file(const char *filename)
   f = fopen(filename, "rb");
   if (!f)
   {
-    printf("Failed to open file `%s`.", filename);
+    fprintf(stderr, "Failed to open file `%s`.\n", filename);
     return nullptr;
   }
 
@@ -82,7 +82,7 @@ class FileBuffer {
       this->f = fopen(filename, "rb");
       if (!this->f)
       {
-        printf("Failed to open file `%s`.", filename);
+        fprintf(stderr, "Failed to open file `%s`.\n", filename);
         return false;
       }
 

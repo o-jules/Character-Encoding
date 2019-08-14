@@ -39,14 +39,14 @@ public:
 
     if (i == -1) {
       // encoding error
-      return false;
+      throw ENCODE_ERROR;
     }
 
     if (i == 0)
     {
       if (a >= s)
       {
-        printf("Errors: bytes overflow.");
+        fprintf(stderr, "Error: overflow bytes.\n");
         error = true;
         throw ENCODE_ERROR;
       }
@@ -62,7 +62,7 @@ public:
     {
       if (s != a)
       {
-        printf("Errors: bytes not sufficient.");
+        fprintf(stderr, "Error: insufficient bytes.\n");
         error = true;
         throw ENCODE_ERROR;
       }
