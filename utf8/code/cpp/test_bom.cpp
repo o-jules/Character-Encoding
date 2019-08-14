@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
       return 1;
     }
 
-    if (utf8::contains_bom(pfile))
+    if (utf8::has_bom(pfile))
       printf("Has BOM ");
     else
       printf("No  BOM ");

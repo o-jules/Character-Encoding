@@ -7,7 +7,7 @@
 namespace utf8
 {
 /// 函数声明
-bool contains_bom(FILE *);
+bool has_bom(FILE *);
 
 /**
  * @const BOM UTF8-BOM编码的BOM字节(byte order mark)
@@ -22,7 +22,7 @@ static const u8 BOM[3] = {239, 187, 191};
  * 如果是，返回true，并将文件读取指针置于BOM之后；
  * 如果不是，返回false；文件读取指针置于文件头。
  */
-bool contains_bom(FILE *f)
+bool has_bom(FILE *f)
 {
   u8 b;
   int i = 0;
