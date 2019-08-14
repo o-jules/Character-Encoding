@@ -27,7 +27,7 @@ bytes *read_file(const char *filename)
 
   u8 b;
   auto data = new bytes();
-  while (fread(&b, BYTE_SIZE, 1, f))
+  while (fread(&b, utf8::BYTE_SIZE, 1, f))
     data->push_back(b);
 
   fclose(f);
@@ -66,16 +66,14 @@ bytes *read_str(const char *str)
   return data;
 };
 
-class FileByteBuffer {
+class FileBuffer {
   private:
     FILE *f = nullptr;
 
   public:
-    static size_t BYTE_SIZE = sizeof(u8);
-
     FileBuffer() {}
     FileBuffer(const char *filename) {
-      open(filename);
+      this->open(filename);
     }
 
     ~FileBuffer() {}
@@ -97,17 +95,18 @@ class FileByteBuffer {
 
     u8 next() {
       u8 b;
-      if (fread(&b, BYTE_SIZE, 1, this->f))
+      if (fread(&b, utf8::BYTE_SIZE, 1, this->f))
         return b;
 
+      return 0;
       // throw FILE_END;
     }
 
-    bytes to_bytes() {
+    bytes *to_bytes() {
       // reset to header
       u8 b;
       auto data = new bytes();
-      while (fread(&b, BYTE_SIZE, 1, f))
+      while (fread(&b, utf8::BYTE_SIZE, 1, f))
         data->push_back(b);
 
       return data;

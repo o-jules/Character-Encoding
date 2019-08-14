@@ -39,7 +39,7 @@ public:
 
     if (i == -1) {
       // encoding error
-      break;
+      return false;
     }
 
     if (i == 0)

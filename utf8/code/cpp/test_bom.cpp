@@ -2,33 +2,28 @@
 #include "include/types.h"
 #include "include/bom.h"
 
-int main(int argc, char **argv)
-{
-  if (argc < 2)
-  {
-    printf("File name missing.");
-    return 1;
-  }
+int main(int argc, char **argv) {
+  const char *files[4] = {
+    "samples/utf8.txt",
+    "samples/utf8bom.txt",
+    "samples/utf8bom-only.txt",
+    "samples/utf8bom-efbb.txt"
+  };
 
-  FILE *pfile = fopen(argv[1], "rb");
-  if (!pfile)
-  {
-    printf("File open failed.");
-    return 1;
-  }
+  for (int i = 0; i < 4; i++) {
+    FILE *pfile = fopen(files[i], "rb");
+    if (!pfile) {
+      fprintf(stderr, "File open failed: %s\n", files[i]);
+      return 1;
+    }
 
-  if (utf8::contains_bom(pfile))
-    printf("UTF8 with BOM\n");
-  else
-    printf("UTF8 without BOM\n");
+    if (utf8::contains_bom(pfile))
+      printf("Has BOM ");
+    else
+      printf("No  BOM ");
 
-  printf("Bytes:\n");
-  utf8::u8 b;
-  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
-  {
-    printf("%d ", b);
+    printf("=> %s\n", files[i]);
   }
-  printf("\n");
 
   return 0;
 }

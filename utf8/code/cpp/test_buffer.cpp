@@ -7,7 +7,7 @@ int main(int argc, char **argv)
   utf8::u8 b;
 
   FILE *pfile;
-  pfile = fopen("utf8.txt", "rb");
+  pfile = fopen("samples/utf8.txt", "rb");
 
   if (!pfile)
   {
@@ -16,17 +16,14 @@ int main(int argc, char **argv)
   }
 
   auto bf = utf8::DecodeBuffer();
-  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
-  {
-    try
-    {
+  while (fread(&b, utf8::BYTE_SIZE, 1, pfile)) {
+    try {
       getchar();
-      printf("puts byte: %u\n", b);
-      if (bf.push(b))
-        printf("gets character: %llu\n", bf.current());
-    }
-    catch (int e)
-    {
+      printf("%u ", b);
+      if (bf.push(b)) {
+        printf("character: %llu\n", bf.current());
+      }
+    } catch (int e) {
       break;
     }
   }

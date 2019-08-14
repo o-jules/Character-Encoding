@@ -1,25 +1,11 @@
-#include <cstdio>
-#include "include/types.h"
+#include "test_utils.h"
 
 int main(int argc, char **argv)
 {
-  utf8::u8 b;
+  const char *default_path = "samples/utf8.txt";
+  const char *file_path = argc > 1 ? argv[1] : default_path;
 
-  FILE *pfile;
-  pfile = fopen("utf8.txt", "rb");
-
-  if (!pfile)
-  {
-    printf("File open failed.");
-    return 1;
-  }
-
-  while (fread(&b, utf8::BYTE_SIZE, 1, pfile))
-  {
-    printf("%d ", b);
-  }
-  printf("\n");
-
+  print_file(file_path);
   return 0;
 }
 

@@ -9,9 +9,9 @@ int main(int argc, char **argv)
 {
   FILE *fw;
 
-  auto cs = utf8::decode_file("utf8.txt");
+  auto cs = utf8::decode_file("samples/utf8.txt");
   printf("Decoding:\n");
-  fw = fopen("write.utf32.tmp", "wb");
+  fw = fopen("samples/write.utf32.tmp", "wb");
   for (auto &p : *cs)
   {
     printf("dec: %08u\thex: %06x\n", p, p);
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
   auto dc = utf8::encode(cp);
   printf("\nEncoding:\n");
 
-  fw = fopen("write.utf8.tmp", "wb");
+  fw = fopen("samples/write.utf8.tmp", "wb");
   for (auto &p : *dc) {
     printf("%x-%u ", p, p);
     fwrite(&p, utf8::BYTE_SIZE, 1, fw);
